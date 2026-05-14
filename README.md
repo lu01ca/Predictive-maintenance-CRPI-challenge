@@ -39,10 +39,13 @@ Raw sensor data alone did not encode the "wear and tear" state of the machinery.
 
 ### 2. Preventing Temporal Data Leakage
 Since the data is sequential, random shuffling would cause severe data leakage (using the future to predict the past). 
+
 * **Growing Window Cross-Validation:** We implemented a custom time-series cross-validation (50% initial train, expanding by 16.7% per fold) to tune hyperparameters.
+  
   <p align="center">
-  <img width="526" height="299" alt="Screenshot 2026-05-14 alle 14 57 23" src="https://github.com/user-attachments/assets/faff12ea-98fe-4899-a2dc-36bb09f35108" />
-</p>
+    <img width="526" height="299" alt="Screenshot 2026-05-14 alle 14 57 23" src="https://github.com/user-attachments/assets/faff12ea-98fe-4899-a2dc-36bb09f35108" />
+  </p>
+
 * **Isolated Oversampling:** We applied **SMOTE** strictly *inside* the training folds. The validation sets remained untouched and naturally imbalanced to ensure unbiased performance estimates.
 
 ### 3. Model Optimization (F2-Score)
@@ -63,9 +66,29 @@ We trained independent **Random Forest** models for each malfunction type, as th
   <img width="838" alt="Variable Importance 2,3,4" src="https://github.com/user-attachments/assets/836ea2b6-2d40-40b1-a9a4-1822adb16cac" />
 </p>
 
-* **Malfunction 1 (The Cost-Matrix Dilemma):** This was the most complex target, with only 10 actual failures in the final test set. Our conservative model triggered 121 alarms. While the algorithm successfully identified the physical precursor (*Wear Stress*), this highlights a critical business trade-off: **maintenance costs vs. risk**. Dispatching a technician over 100 times for false positives carries a heavy operational cost. We deliberately tuned the threshold to minimize missed catastrophic failures, but the final implementation requires management to weigh the financial cost of continuous inspections against the cost of machine downtime.<img width="821" height="262" alt="Screenshot 2026-05-14 alle 14 58 05" src="https://github.com/user-attachments/assets/106d0239-1862-4879-bd1f-d83cc77d46d4" />
+* **Malfunction 1 (The Cost-Matrix Dilemma):** This was the most complex target, with only 10 actual failures in the final test set. Our conservative model triggered 121 alarms. While the algorithm successfully identified the physical precursor (*Wear Stress*), this highlights a critical business trade-off: **maintenance costs vs. risk**. Dispatching a technician over 100 times for false positives carries a heavy operational cost. We deliberately tuned the threshold to minimize missed catastrophic failures, but the final implementation requires management to weigh the financial cost of continuous inspections against the cost of machine downtime.
+  
+  <p align="center">
+    <img width="821" height="262" alt="Screenshot 2026-05-14 alle 14 58 05" src="https://github.com/user-attachments/assets/106d0239-1862-4879-bd1f-d83cc77d46d4" />
+  </p>
 
 * **Malfunction 5 (The Stochastic Case):** Data exploration revealed a 0% physical predictability for this failure type (which had 0 occurrences in the test set). Recognizing the stochastic nature of the fault, we recommended a purely reactive maintenance strategy rather than forcing a Machine Learning model that would only generate noise and alarm fatigue.
+
+---
+
+### 📈 Final Performance Summary
+The models' performance was evaluated emphasizing the **Balanced Accuracy (BACC)** to account for the extreme class imbalance. The Global Failure (Mal0) performance is the average of the specific predictive models.
+
+| Target Failure | Final Model | Balanced Accuracy (BACC) |
+| :--- | :--- | :--- |
+| **Malfunction 1** | Random Forest + SMOTE | **0.87** |
+| **Malfunction 2** | Random Forest + SMOTE | **1.00** |
+| **Malfunction 3** | Random Forest + SMOTE | **1.00** |
+| **Malfunction 4** | Random Forest + SMOTE | **1.00** |
+| **Global Failure (Mal0)** | *Aggregated* | **~0.93** |
+| **Malfunction 5** | *None (Reactive Strategy)* | *1* |
+
+<br>
 
 ---
 
