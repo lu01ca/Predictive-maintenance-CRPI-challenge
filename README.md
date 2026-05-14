@@ -85,8 +85,9 @@ The models' performance was evaluated emphasizing the **Balanced Accuracy (BACC)
 | **Malfunction 2** | Random Forest + SMOTE | **1.00** |
 | **Malfunction 3** | Random Forest + SMOTE | **1.00** |
 | **Malfunction 4** | Random Forest + SMOTE | **1.00** |
+| **Malfunction 5** | *None (Reactive Strategy)* | **1.00** |
 | **Global Failure (Mal0)** | *Aggregated* | **~0.93** |
-| **Malfunction 5** | *None (Reactive Strategy)* | *1* |
+
 
 <br>
 
