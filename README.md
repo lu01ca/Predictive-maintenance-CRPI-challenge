@@ -40,7 +40,9 @@ Raw sensor data alone did not encode the "wear and tear" state of the machinery.
 ### 2. Preventing Temporal Data Leakage
 Since the data is sequential, random shuffling would cause severe data leakage (using the future to predict the past). 
 * **Growing Window Cross-Validation:** We implemented a custom time-series cross-validation (50% initial train, expanding by 16.7% per fold) to tune hyperparameters.
----<img width="526" height="299" alt="Screenshot 2026-05-14 alle 14 57 23" src="https://github.com/user-attachments/assets/faff12ea-98fe-4899-a2dc-36bb09f35108" />
+  <p align="center">
+  <img width="526" height="299" alt="Screenshot 2026-05-14 alle 14 57 23" src="https://github.com/user-attachments/assets/faff12ea-98fe-4899-a2dc-36bb09f35108" />
+</p>
 * **Isolated Oversampling:** We applied **SMOTE** strictly *inside* the training folds. The validation sets remained untouched and naturally imbalanced to ensure unbiased performance estimates.
 
 ### 3. Model Optimization (F2-Score)
