@@ -54,13 +54,14 @@ We trained independent **Random Forest** models for each malfunction type, as th
 
 * **Malfunctions 2, 3, & 4:** Achieved near-perfect Balanced Accuracy, successfully detecting the actual failures in the test set (0 for Mal2, 10 for Mal3, and 21 for Mal4). The Gini Variable Importance confirmed the physical nature of the faults (e.g., *Thermal Delta* driving Malfunction 2, *Power* driving Malfunction 3).
 
-<img width="549" height="297" alt="Screenshot 2026-05-14 alle 14 57 35" src="https://github.com/user-attachments/assets/a568202a-7a80-4758-89ba-5061374df00b" />
-<img width="838" height="255" alt="Screenshot 2026-05-14 alle 14 57 53" src="https://github.com/user-attachments/assets/836ea2b6-2d40-40b1-a9a4-1822adb16cac" />
+<p align="center">
+  <img width="549" alt="Hyperparameters Table" src="https://github.com/user-attachments/assets/a568202a-7a80-4758-89ba-5061374df00b" />
+</p>
+<p align="center">
+  <img width="838" alt="Variable Importance 2,3,4" src="https://github.com/user-attachments/assets/836ea2b6-2d40-40b1-a9a4-1822adb16cac" />
+</p>
 
-
-* **Malfunction 1 (The Cost-Matrix Dilemma):** This was the most complex target, with only 10 actual failures in the final test set. Our conservative model triggered 121 alarms. While the algorithm successfully identified the physical precursor (*Wear Stress*), this highlights a critical business trade-off: **maintenance costs vs. risk**. Dispatching a technician over 100 times for false positives carries a heavy operational cost. We deliberately tuned the threshold to minimize missed catastrophic failures, but the final implementation requires management to weigh the financial cost of continuous inspections against the cost of machine downtime.
-
-<img width="821" height="262" alt="Screenshot 2026-05-14 alle 14 58 05" src="https://github.com/user-attachments/assets/106d0239-1862-4879-bd1f-d83cc77d46d4" />
+* **Malfunction 1 (The Cost-Matrix Dilemma):** This was the most complex target, with only 10 actual failures in the final test set. Our conservative model triggered 121 alarms. While the algorithm successfully identified the physical precursor (*Wear Stress*), this highlights a critical business trade-off: **maintenance costs vs. risk**. Dispatching a technician over 100 times for false positives carries a heavy operational cost. We deliberately tuned the threshold to minimize missed catastrophic failures, but the final implementation requires management to weigh the financial cost of continuous inspections against the cost of machine downtime.<img width="821" height="262" alt="Screenshot 2026-05-14 alle 14 58 05" src="https://github.com/user-attachments/assets/106d0239-1862-4879-bd1f-d83cc77d46d4" />
 
 * **Malfunction 5 (The Stochastic Case):** Data exploration revealed a 0% physical predictability for this failure type (which had 0 occurrences in the test set). Recognizing the stochastic nature of the fault, we recommended a purely reactive maintenance strategy rather than forcing a Machine Learning model that would only generate noise and alarm fatigue.
 
